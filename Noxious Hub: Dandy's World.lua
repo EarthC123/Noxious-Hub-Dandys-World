@@ -168,7 +168,7 @@ function checkifunoptimized()
 	local t = value.Value
 
 	noxious["current toon"] = t
-	noxious["using unoptimized toon"] = table.find(noxious["unoptimized toons"], t) ~= nil
+	noxious["using unoptimized toon"] = false
 end
 
 -------------------------------------------------------------------------------------------------------------------------------
@@ -11385,7 +11385,7 @@ addcommand("showadminpanel", "sap", function()
 
 			setVisible(frame)
 		end)
-		
+
 		task.spawn(function() noxious["local player"].PlayerGui.ScreenGui.DevFrame.Visible = true end)
 	end
 end)
@@ -11774,7 +11774,7 @@ end)
 function resetchar()
 	local player = noxious["local player"]
 	local character = player.Character or player.CharacterAdded:Wait()
-	
+
 	task.spawn(function()
 		stoprainbow()
 		if not stoprainbow() then
@@ -14213,7 +14213,7 @@ function togenerator(useoldmethod)
 	local success, err = pcall(function()
 		local wasnoclipping = noclipping
 		local wasbypassinganticheat = bypassinganticheat
-		
+
 		task.spawn(function() execcmd("noclip") end)
 		task.spawn(function() execcmd("eacb") end)
 
@@ -14253,7 +14253,7 @@ function togenerator(useoldmethod)
 						local generatorCFrame = randomGenerator:GetPrimaryPartCFrame()
 						local forwardPosition = generatorCFrame.Position + generatorCFrame.LookVector * 4
 						local targetCFrame = CFrame.new(forwardPosition, generatorCFrame.Position) * CFrame.new(0, 2.3, 0)
-						
+
 						if useoldmethod then 
 							tpbypass(targetCFrame) 
 							teleportingtogenerator = false
@@ -16605,12 +16605,12 @@ autouseabilityrunning = false
 autouseabilityconnection = nil
 
 function doabil()
-		local args = {
-			[1] = game:GetService("Players").LocalPlayer.Character,
-			[2] = CFrame.new(-65.78115844726563, 145.7693634033203, 86.53424072265625) * CFrame.Angles(4.413669e-9, 2.9576959e-16, 5.3380848e-8),
-			[3] = false
-		}
-		noxious["replicated storage"].Events.AbilityEvent:InvokeServer(unpack(args))
+	local args = {
+		[1] = game:GetService("Players").LocalPlayer.Character,
+		[2] = CFrame.new(-65.78115844726563, 145.7693634033203, 86.53424072265625) * CFrame.Angles(4.413669e-9, 2.9576959e-16, 5.3380848e-8),
+		[3] = false
+	}
+	noxious["replicated storage"].Events.AbilityEvent:InvokeServer(unpack(args))
 end
 
 addcommand("enableautouseability", "eaua", function()
@@ -17425,7 +17425,7 @@ function tpbypass(cf, alt)
 
 			noxious["run service"]:BindToRenderStep("CameraOffset", Enum.RenderPriority.Camera.Value + 1, onRenderStep)
 		end)
-		
+
 		game.Workspace.Gravity = 196.2
 
 		task.spawn(allowteleport)
@@ -17492,7 +17492,7 @@ function tpbypass(cf, alt)
 			noxious["run service"]:UnbindFromRenderStep("CameraOffset")
 		end)
 	end
-	
+
 	game.Workspace.Gravity = 196.2
 end
 
@@ -19787,7 +19787,7 @@ canflip = true
 
 addcommand("fliptools", "ft", function()
 	task.spawn(function() notify("Spam flipping can trigger anticheat.", 5, "warning") end)
-	
+
 	local plr = game["Players"]["LocalPlayer"]
 
 	local function performflip(character, flipdirection)
@@ -19795,7 +19795,7 @@ addcommand("fliptools", "ft", function()
 		canflip = false
 		local hum = character:WaitForChild("Humanoid")
 		local rootpart = character:WaitForChild("HumanoidRootPart")
-		
+
 		task.spawn(function()
 			if noxious["humanoid"] then
 				noxious["humanoid"].JumpPower = 50
@@ -19821,7 +19821,7 @@ addcommand("fliptools", "ft", function()
 		task.wait(0.6)
 
 		bav:Destroy()
-		
+
 		task.spawn(function()
 			if noxious["humanoid"] then
 				noxious["humanoid"].JumpPower = 0
@@ -19830,7 +19830,7 @@ addcommand("fliptools", "ft", function()
 				noxious["humanoid"]:SetStateEnabled(Enum.HumanoidStateType.Freefall, false)
 			end
 		end)
-		
+
 		canflip = true
 	end
 
@@ -22969,7 +22969,7 @@ function dodgetwisteds()
 	end
 
 	local originalCFrame = noxious["humanoid root part"].CFrame
-	
+
 	tofakeele(false)
 
 	task.spawn(function() 
