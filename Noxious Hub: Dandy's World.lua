@@ -11,7 +11,17 @@
 
 if _G.dswdnoxiousloaded == true then return end _G.dswdnoxiousloaded = true local noxious = {}
 
--------------------------------------------------------------------------------------------------------------------------------
+--[[---------------------------------------------------------------------------------------------------------------------------
+
+  hello welcome to Noxious Hub: Dandy's World version 7.9.0
+  this was the last version of the script before it was rebranded to Noxious: Boxten Sex GUI
+
+  some of the stuff in this script doesnt work at all as Dandy's World has updated a bunch
+  ive removed some of the redundant and unnecessary code to make it easier to manage ig
+
+  feel free to skid some of the code for yoru own script or something :]
+
+---------------------------------------------------------------------------------------------------------------------------]]--
 
 if not game:IsLoaded() then game["Loaded"]:Wait() end noxious["testing"] = false
 
@@ -32,25 +42,22 @@ noxious["loaded"] = false
 
 noxious["click sound"] = "rbxassetid://87152549167464"
 
-function playclicksound() local s = Instance.new("Sound") s["SoundId"] = noxious["click sound"] s["Parent"] = game["Workspace"] s["Volume"] = 1.2 s["TimePosition"] = 0.1 s:Play() end
-
--------------------------------------------------------------------------------------------------------------------------------
-
-noxious["prefixes"] = { "Reversed", "Skeptical", "Bright", "Sweet", "Fish", "Mute", "Kleptomaniac", "Perfectionist", "Enthusiastic", "Addicted", "Investigative", "Crafty", "Angry", "Minimalistic", "Clean", "Insane", "Quiet", "Worried", "Drunk", "Small", "Ignored", "Protective", "Smart", "Clueless", "Old", "Flying", "Large", "Edible", "Glowing", "Concerned" }
-noxious["suffixes"] = { "Ink", "Box", "Lamp", "Ghost", "Cake", "Bowl", "Butterfly", "Gachapon", "Mirror", "Fluff", "Balloon", "Bubble", "Mask", "Glass", "Paper", "Shrimp", "Teacup", "Tissue", "Pinata", "Moon", "Basket", "Ornament", "Rock", "Shell", "Berry", "Television", "Bunny", "Egg", "Moth", "Mineral", "Cookie", "Reindeer", "Flower" }
-
-function randomname()
-	local prefix = noxious["prefixes"][math.random(1, #noxious["prefixes"])]
-	local suffix = noxious["suffixes"][math.random(1, #noxious["suffixes"])]
-	return prefix .. suffix
+function playclicksound()
+  local s = Instance.new("Sound")
+  s["SoundId"] = noxious["click sound"]
+  s["Parent"] = game["Workspace"]
+  s["Volume"] = 1.2
+  s["TimePosition"] = 0.1
+  s:Play()
+  s.Ended:Connect(function()
+    s:Destroy()
+  end)
 end
-
-noxious["randomized name"] = randomname()
 
 -------------------------------------------------------------------------------------------------------------------------------
 
 noxious["screen gui"] = Instance.new("ScreenGui")
-noxious["screen gui"]["Name"] = noxious["randomized name"]
+noxious["screen gui"]["Name"] = "Noxious Hub: Dandy's World"
 noxious["screen gui"]["ResetOnSpawn"] = false
 
 if noxious["in studio"] then
@@ -129,61 +136,7 @@ noxious["local player"]["CharacterAdded"]:Connect(function(char) updcharrefs(cha
 
 -------------------------------------------------------------------------------------------------------------------------------
 
---[[
-removetoons = {}
-for _, item in ipairs(noxious["unoptimized toons"]) do
-	removetoons[item] = true
-end
-
-toonresult = {}
-for _, item in ipairs(noxious["optimized toons"]) do
-	if not removetoons[item] then
-		table.insert(toonresult, item)
-	end
-end
-]]--
-
-function checkifunoptimized()
-	local function waitfor(root, array)
-		local current = root
-		for _, name in ipairs(array) do
-			current = current:WaitForChild(name)
-		end
-		return current
-	end
-
-	local playerroot = nil
-	repeat
-		playerroot = inrun() and game.Workspace:FindFirstChild("InGamePlayers") or game.Workspace:FindFirstChild("Players")
-		task.wait()
-	until playerroot
-
-	local player = nil
-	repeat
-		player = playerroot:FindFirstChild(noxious["username"])
-		task.wait()
-	until player
-
-	local value = waitfor(player, { "Config", "ModuleName" })
-	local t = value.Value
-
-	noxious["current toon"] = t
-	noxious["using unoptimized toon"] = false
-end
-
--------------------------------------------------------------------------------------------------------------------------------
-
-if not noxious["in studio"] then getgenv()._AOIHoihhf8ethoi2fnsAifh084tKj09t4HDojnw49hoiaf0JSAfnoi4t80hsklNSf9nvSDM4Ids38gBufja04jqe = request or http_request or (syn and syn.request) end
-
-function die()
-	if not noxious["in studio"] then
-		task.spawn(function()
-			request = function(...) return "hi" end
-			http_request = request
-			syn = { request = request }
-		end)
-	end
-end
+if not noxious["in studio"] then getgenv().req = request or http_request or (syn and syn.request) end
 
 function randomstring(l)
 	local characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -223,77 +176,28 @@ function tofolder()
 	return b
 end
 
-function tologs()
-	if noxious["in studio"] then return end
-
-	local a = "Noxious Hub"
-	local b = a .. "/Dandy's World"
-	local c = b .. "/Secret"
-
-	if not isfolder(a) then makefolder(a) end
-	if not isfolder(b) then makefolder(b) end
-	if not isfolder(c) then makefolder(c) end
-
-	return c
-end
-
-function isaprilfools()
-	local d = os.date("*t")
-	return (d.month == 4 and d.day == 1) or noxious["april fools"] or false
-end
-
 function autorejoin()
 	game["GuiService"].ErrorMessageChanged:Connect(function()
 		noxious["teleport service"]:Teleport(noxious["dandy's world lobby"], noxious["local player"])
 	end)
 end
 
--- FUCK IS THIS FOR
-function owoify(text)
-	local substitutions = {
-		["r"] = "w",
-		["l"] = "w",
-		["R"] = "W",
-		["L"] = "W",
-		["no"] = "nyo",
-		["No"] = "Nyo",
-		["mo"] = "myo",
-		["na"] = "nya",
-		["ove"] = "uv",
-		["th"] = "d",
-	}
-
-	for k, v in pairs(substitutions) do
-		text = text:gsub(k, v)
-	end
-
-	local suffixes = { " owo", " UwU", " >w<", " ^w^", " rawr~", " nya~" }
-	if math.random() < 0.5 then
-		text = text .. suffixes[math.random(1, #suffixes)]
-	end
-
-	return text
-end
-
 -------------------------------------------------------------------------------------------------------------------------------
 
-noxious["admins"] = { "fatcosmolover", "notunaqle", "directredirect", "decompyler", "stymuli", "zestyassboxten", "astrosconstellations", "unaqle", "hyqnic", "CerebralAneurysms", "stupiddumbpastry", "StrikerRode", "noxiousholder", "ihatedandysword", "DWNoxiousTester", "hxpxotic", "exherxal", "Plectora", "furbound", "9sght", "protogenfemboys", "BellasPerspective", "NoxiousTester1", "NoxiousTester2", "NoxiousTester3", "stupiddumbfishbowl", "c00lunable", "cnutboyastro", "cnutboycosmo", "BellAss1232", "stupiddumbmusicalbox", "stupiddumbrollcake" }
-
-noxious["unable"] = { "fatcosmolover", "notunaqle", "directredirect", "decompyler", "astrosconstellations", "boxtenwhimperaudio", "unaqle", "c00lunable", "stupiddumbmusicalbox", "CerebralAneurysms" }
-noxious["undercover unable"] = { "unab_e", "quwuelver", "BoxtomBotten", "Boxtom_Botten", }
-
-noxious["hypnic"] = { "gaydandy", "gayastro", "parabrasque", "hyqnic", "stymuli" }
+-- emptied
+noxious["unable"] = { "" }
+noxious["hypnic"] = { "" }
+  
+noxious["admins"] = { "" }
 
 if not noxious["in studio"] then
-	noxious["donors"] = { }
-	noxious["testers"] = { }
-	noxious["donors"] = { }
-	noxious["testers"] = { }
+	noxious["donors"] = { "" }
+	noxious["testers"] = { "" }
 end
 
-noxious["cosmo orbiter"] = { "femcosmo", "overoveroveragainWHY", "CosmoLovver", "CosmoLovvver" }
-noxious["shrimpo orbiter"] = { "helllllllllllllooALT", "shrimpcest", "chuufromlewna0", "eggydropkick", "TheLostTwentyNine", "edgarfunky", "decompyler", "javierre14", "Loongies23", "masterMingTheCool", "ihatedandysword", "UwUunicornPrincess1o", "NpcHunter453", "MaxwellTheKitty1", "Maddi_ealala" }
-noxious["boxten orbiter"] = { "aaaa", "asphyxyation" }
+noxious["cosmo orbiter"] = { "" }
+noxious["shrimpo orbiter"] = { "" }
+noxious["boxten orbiter"] = { "" }
 
 noxious["qwelver"] = { "Qwelver" }
 
@@ -360,15 +264,6 @@ function ishypnic(username)
 	return false
 end
 
-function undercover(username)
-	for _, dev in ipairs(noxious["undercover unable"]) do
-		if dev == username then
-			return true
-		end
-	end
-	return false
-end
-
 function teammember(username)
 	for _, dev in ipairs(noxious["admins"]) do
 		if dev == username then
@@ -398,6 +293,7 @@ end
 
 -------------------------------------------------------------------------------------------------------------------------------
 
+-- lol
 noxious["sex mode"] = false
 
 if isunable(noxious["username"]) then
@@ -903,15 +799,6 @@ function gamecheck()
 	if inrun() then return "Run" end
 	if inrp() then return "Roleplay" end
 end
-
--------------------------------------------------------------------------------------------------------------------------------
-
-noxious["local player"].CharacterAdded:Connect(function()
-	if inrun() and not noxious["character"] then task.wait(5) end
-	checkifunoptimized()
-end)
-
-if inlobby() then checkifunoptimized() end
 
 -------------------------------------------------------------------------------------------------------------------------------
 
@@ -2503,8 +2390,6 @@ noxious["command lists"] = {
 		"changeownertagtext, cotagt [text] - changes the owner tag text to the specified text",
 		"enableglitchednametag, egnt - glitches your name tag",
 		"disableglitchednametag, dgnt - sets your name tag back to normal",
-		"enablerunofs30znametag, erosnt - makes your name tag recite the lyrics for 'voice of wangan'",
-		"disablerunofs30znametag, drosnt - sets your name tag back to normal",
 		"showownertag, sot - shows the owner tag above your head",
 		"hideownertag, hot - hides the owner tag above your head",
 		"dialoguesound, ds [sound id] - sets the sound that plays when your toon speaks to the specified sound id",
@@ -4418,7 +4303,7 @@ noxious["button lists"] = {
 					["content-type"] = "application/json"
 				}
 
-				local request = getgenv()._AOIHoihhf8ethoi2fnsAifh084tKj09t4HDojnw49hoiaf0JSAfnoi4t80hsklNSf9nvSDM4Ids38gBufja04jqe
+				local request = getgenv().req
 				local abcdef = {Url = webhookUrl, Body = data, Method = "POST", Headers = headers}
 				request(abcdef)
 			end
@@ -8291,14 +8176,6 @@ function intro()
 
 	waitforcompletion()
 
-	task.spawn(function()
-		if noxious["character"] then
-			if inrun() then 
-				checkifunoptimized()
-			end
-		end
-	end)
-
 	local unablenotified = {}
 	local qwelvernotified = {}
 	local devnotified = {}
@@ -9279,15 +9156,6 @@ addcommand("notify", "n", function(...)
 	local text = table.concat({...}, " ")
 	if text ~= "" then
 		notify(text, 5)
-	end
-end)
-
--------------------------------------------------------------------------------------------------------------------------------
-
-addcommand("twistedglistentext", "tgt", function(...)
-	local text = table.concat({...}, " ")
-	if text ~= "" then
-		firesignal(game["ReplicatedStorage"].Events.MonsterDialogueEvent.OnClientEvent, "GlistenMonster", text, 5)
 	end
 end)
 
@@ -11783,8 +11651,7 @@ function resetchar()
 	end)
 
 	task.spawn(function()
-		local b = noxious["character"]:WaitForChild("Body", 0.1)
-		if not noxious["using unoptimized toon"] then b = noxious["character"]:WaitForChild("Torso", 0.1) end
+		local b = noxious["character"]:WaitForChild("Torso", 0.1)
 		for _, child in ipairs(b:GetChildren()) do
 			if child:IsA("AlignOrientation") or child:IsA("Attachment") then
 				child:Destroy()
@@ -15280,8 +15147,7 @@ function switchcamerasubject(bodypart)
 end
 
 addcommand("floatlay", "flay", function()
-	local b = noxious["character"]:WaitForChild("Body", 0.1)
-	if not noxious["using unoptimized toon"] then b = noxious["character"]:WaitForChild("Torso", 0.1) end
+	local b = noxious["character"]:WaitForChild("Torso", 0.1)
 	if not b or not b:IsA("BasePart") then
 		return
 	end
@@ -15305,8 +15171,7 @@ addcommand("floatlay", "flay", function()
 end)
 
 addcommand("unfloatlay", "unflay", function()
-	local b = noxious["character"]:WaitForChild("Body", 0.1)
-	if not noxious["using unoptimized toon"] then b = noxious["character"]:WaitForChild("Torso", 0.1) end
+	local b = noxious["character"]:WaitForChild("Torso", 0.1)
 	for _, child in ipairs(b:GetChildren()) do
 		if child:IsA("AlignOrientation") or child:IsA("Attachment") then
 			child:Destroy()
@@ -15318,8 +15183,7 @@ end)
 -------------------------------------------------------------------------------------------------------------------------------
 
 addcommand("upsidedown", "dinnerbone", function()
-	local b = noxious["character"]:WaitForChild("Body", 0.1)
-	if not noxious["using unoptimized toon"] then b = noxious["character"]:WaitForChild("Torso", 0.1) end
+	local b = noxious["character"]:WaitForChild("Torso", 0.1)
 	if not b or not b:IsA("BasePart") then
 		return
 	end
@@ -15343,8 +15207,7 @@ addcommand("upsidedown", "dinnerbone", function()
 end)
 
 addcommand("rightsideup", "undinnerbone", function()
-	local b = noxious["character"]:WaitForChild("Body", 0.1)
-	if not noxious["using unoptimized toon"] then b = noxious["character"]:WaitForChild("Torso", 0.1) end
+	local b = noxious["character"]:WaitForChild("Torso", 0.1)
 	for _, child in ipairs(b:GetChildren()) do
 		if child:IsA("AlignOrientation") or child:IsA("Attachment") then
 			child:Destroy()
@@ -15356,8 +15219,7 @@ end)
 -------------------------------------------------------------------------------------------------------------------------------
 
 addcommand("rotate", "rotate", function(x, y, z)
-	local b = noxious["character"]:WaitForChild("Body", 0.1)
-	if not noxious["using unoptimized toon"] then b = noxious["character"]:WaitForChild("Torso", 0.1) end
+	local b = noxious["character"]:WaitForChild("Torso", 0.1)
 	if not b or not b:IsA("BasePart") then
 		return
 	end
@@ -15401,8 +15263,7 @@ convulsetask = nil
 
 addcommand("convulse", "convulse", function()
 	switchcamerasubject("Body")
-	local b = noxious["character"]:WaitForChild("Body", 0.1)
-	if not noxious["using unoptimized toon"] then b = noxious["character"]:WaitForChild("Torso", 0.1) end
+	local b = noxious["character"]:WaitForChild("Torso", 0.1)
 	if not b or not b:IsA("BasePart") then
 		return
 	end
@@ -15456,8 +15317,7 @@ addcommand("gyrate", "gyrate", function()
 		gyratetask = nil
 	end
 
-	local b = noxious["character"]:WaitForChild("Body", 0.1)
-	if not noxious["using unoptimized toon"] then b = noxious["character"]:WaitForChild("Torso", 0.1) end
+	local b = noxious["character"]:WaitForChild("Torso", 0.1)
 	if not b or not b:IsA("BasePart") then
 		return
 	end
@@ -15513,8 +15373,7 @@ addcommand("xspin", "xspin", function(speed)
 	speed = tonumber(speed) or 10
 
 	switchcamerasubject("Body")
-	local b = noxious["character"]:WaitForChild("Body", 0.1)
-	if not noxious["using unoptimized toon"] then b = noxious["character"]:WaitForChild("Torso", 0.1) end
+	local b = noxious["character"]:WaitForChild("Torso", 0.1)
 	if not b or not b:IsA("BasePart") then
 		return
 	end
@@ -15548,9 +15407,8 @@ end)
 addcommand("zspin", "zspin", function(speed)
 	speed = tonumber(speed) or 10
 
-	switchcamerasubject("Body")
-	local b = noxious["character"]:WaitForChild("Body", 0.1)
-	if not noxious["using unoptimized toon"] then b = noxious["character"]:WaitForChild("Torso", 0.1) end
+	switchcamerasubject("Torso")
+	local b = noxious["character"]:WaitForChild("Torso", 0.1)
 	if not b or not b:IsA("BasePart") then
 		return
 	end
@@ -16098,12 +15956,10 @@ function looprunspeed()
 				local velocity = rootPart.Velocity
 				local isMoving = velocity.Magnitude > 1
 
-				if not noxious["using unoptimized toon"] then
-					if isMoving and not looprunspeedlastmoving then
-						enableanimloop("Run")
-					elseif not isMoving and looprunspeedlastmoving then
-						disableanimloop("Run")
-					end
+				if isMoving and not looprunspeedlastmoving then
+					enableanimloop("Run")
+				elseif not isMoving and looprunspeedlastmoving then
+					disableanimloop("Run")
 				end
 
 				looprunspeedlastmoving = isMoving
@@ -16388,7 +16244,6 @@ function setupmobileinfstam()
 			return
 		end
 
-		if noxious["using unoptimized toon"] then return end
 		infinitestaminasprinttoggled = not infinitestaminasprinttoggled
 		if infinitestaminasprinttoggled then
 			infinitestaminaclonedbutton.Image = image2
@@ -16403,7 +16258,6 @@ end
 
 function setuppcinfstam()
 	table.insert(infinitestaminaconnections, noxious["user input service"].InputBegan:Connect(function(input, gameProcessed)
-		if noxious["using unoptimized toon"] then return end
 
 		if infinitestaminaenabled then
 			if input.KeyCode == Enum.KeyCode.LeftShift and not gameProcessed then
@@ -18074,86 +17928,6 @@ end)
 
 -------------------------------------------------------------------------------------------------------------------------------
 
-local isrunofs30znametagenabled = {}
-local runTasks = {}
-
-local messages = {
-	{display = "Sempiterna", user = "(@Sempiterna)", welcome = "Welcome, Sempiterna!", welcome2 = "(@Sempiterna)", delay = 0.55},
-	{display = "Sempiterna sit", user = "(@Sempiterna sit)", welcome = "Welcome, Sempiterna sit!", welcome2 = "(@Sempiterna sit)", delay = 0.15},
-	{display = "Sempiterna sit beatae,", user = "(@Sempiterna sit beatae,)", welcome = "Welcome, Sempiterna sit beatae!", welcome2 = "(@Sempiterna sit beatae,)", delay = 0.7},
-	{display = "Sempiterna sit beatae, trinitati", user = "(@Sempiterna sit beatae, trinitati)", welcome = "Welcome, Sempiterna sit beatae, trinitati!", welcome2 = "(@Sempiterna sit beatae, trinitati)", delay = 0.7},
-	{display = "Sempiterna sit beatae, trinitati gloria.", user = "(@Sempiterna sit beatae, trinitati gloria.)", welcome = "Welcome, Sempiterna sit beatae, trinitati gloria!", welcome2 = "(@Sempiterna sit beatae, trinitati gloria.)", delay = 0.7},
-	{display = "Aequa", user = "(@Aequa)", welcome = "Welcome, Aequa!", welcome2 = "(@Aequa)", delay = 0.2},
-	{display = "Aequa patri", user = "(@Aequa patri)", welcome = "Welcome, Aequa patri!", welcome2 = "(@Aequa patri)", delay = 0.4},
-	{display = "Aequa patri filioque,", user = "(@Aequa patri filioque,)", welcome = "Welcome, Aequa patri filioque!", welcome2 = "(@Aequa patri filioque,)", delay = 0.7},
-	{display = "Aequa patri filioque, par", user = "(@Aequa patri filioque, par)", welcome = "Welcome, Aequa patri filioque, par!", welcome2 = "(@Aequa patri filioque, par)", delay = 0.2},
-	{display = "Aequa patri filioque, par decus", user = "(@Aequa patri filioque, par decus)", welcome = "Welcome, Aequa patri filioque, par decus!", welcome2 = "(@Aequa patri filioque, par decus)", delay = 0.3},
-	{display = "Aequa patri filioque, par decus paraclito.", user = "(@Aequa patri filioque, par decus paraclito.)", welcome = "Welcome, Aequa patri filioque, par decus paraclito!", welcome2 = "(@Aequa patri filioque, par decus paraclito.)", delay = 0.77}
-}
-
-function runofs30znametag(player)
-	isrunofs30znametagenabled[player] = true
-	task.spawn(function()
-		local playersFolder = workspace:FindFirstChild("Players") or workspace:FindFirstChild("InGamePlayers")
-		local model = playersFolder and playersFolder:FindFirstChild(player.Name)
-		local hrp = model and model:FindFirstChild("HumanoidRootPart")
-		local nameTag = hrp and hrp:FindFirstChild("NameTag")
-		local frame = nameTag and nameTag:FindFirstChild("Frame")
-		local displayNameLabel = frame and frame:FindFirstChild("DisplayName")
-		local userNameLabel = frame and frame:FindFirstChild("UserName")
-
-		while isrunofs30znametagenabled[player] do
-			for _, msg in ipairs(messages) do
-				if not isrunofs30znametagenabled[player] then return end
-
-				if displayNameLabel and userNameLabel then
-					displayNameLabel.Text = msg.display
-					userNameLabel.Text = msg.user
-				end
-
-				if noxious["top frame text"] then noxious["top frame text"].Text = msg.welcome end
-				if noxious["top frame subtext"] then noxious["top frame subtext"].Text = msg.welcome2 end
-
-				task.wait(msg.delay)
-			end
-		end
-	end)
-end
-
-addcommand("enablerunofs30znametag", "erosnt", function(target)
-	for _, player in ipairs(resolveplayers(target)) do
-		if not isrunofs30znametagenabled[player] then
-			runofs30znametag(player)
-		end
-	end
-end)
-
-addcommand("disablerunofs30znametag", "drosnt", function(target)
-	for _, player in ipairs(resolveplayers(target)) do
-		isrunofs30znametagenabled[player] = false
-
-		local playersFolder = workspace:FindFirstChild("Players") or workspace:FindFirstChild("InGamePlayers")
-		local model = playersFolder and playersFolder:FindFirstChild(player.Name)
-		local hrp = model and model:FindFirstChild("HumanoidRootPart")
-		local nameTag = hrp and hrp:FindFirstChild("NameTag")
-		local frame = nameTag and nameTag:FindFirstChild("Frame")
-		local displayNameLabel = frame and frame:FindFirstChild("DisplayName")
-		local userNameLabel = frame and frame:FindFirstChild("UserName")
-
-		if displayNameLabel and userNameLabel then
-			displayNameLabel.Text = player.DisplayName
-			userNameLabel.Text = "(@" .. player.Name .. ")"
-		end
-
-		if player == game:GetService("Players").LocalPlayer then
-			if noxious["top frame text"] then noxious["top frame text"].Text = "Welcome, " .. player.DisplayName .. "!" end
-			if noxious["top frame subtext"] then noxious["top frame subtext"].Text = "(@" .. player.Name .. ")" end
-		end
-	end
-end)
-
--------------------------------------------------------------------------------------------------------------------------------
-
 addcommand("showownertag", "sot", function(target)
 	for _, player in ipairs(resolveplayers(target)) do
 		local playersFolder = workspace:FindFirstChild("Players") or workspace:FindFirstChild("InGamePlayers")
@@ -19483,24 +19257,13 @@ function dwunhead()
 end
 
 function dwhsit(command, player)
-	local animationId, offset
-	if noxious["using unoptimized toon"] then
-		animationId = "16873659196"
-		offset = CFrame.new(0, 4.65, -0.3)
-	else
-		animationId = "75597599641198"
-		offset = CFrame.new(0, 3.25, -0.8)
-	end
+	local animationId, offset = "75597599641198", CFrame.new(0, 3.25, -0.8)
 
 	handleinteraction(command, player, animationId, offset, "hsit")
 end
 
 function dwunhsit()
-	if noxious["using unoptimized toon"] then
-		stopinteraction("hsit")
-	else
-		stopinteraction("hsit")
-	end	
+	stopinteraction("hsit")
 end
 
 function dwhjump(command, player)
@@ -19688,8 +19451,7 @@ addcommand("unspin", "unspin", function()
 		end
 	end
 
-	local b = noxious["character"]:WaitForChild("Body", 0.1)
-	if not noxious["using unoptimized toon"] then b = noxious["character"]:WaitForChild("Torso", 0.1) end
+	local b = noxious["character"]:WaitForChild("Torso", 0.1)
 	if not b or not b:IsA("BasePart") then
 		return
 	end
@@ -21565,10 +21327,10 @@ function refreshanimations()
 	barrelrollanim.AnimationId = "rbxassetid://18226927388"
 
 	waveanim = Instance.new("Animation")	
-	waveanim.AnimationId = noxious["using unoptimized toon"] and "rbxassetid://17059625743" or "rbxassetid://77597199950787"
+	waveanim.AnimationId = "rbxassetid://77597199950787"
 
 	twirlanim = Instance.new("Animation")	
-	twirlanim.AnimationId = noxious["using unoptimized toon"] and "rbxassetid://17630950280" or "rbxassetid://88091931881960"
+	twirlanim.AnimationId = "rbxassetid://88091931881960"
 
 	twirl2anim = Instance.new("Animation")	
 	twirl2anim.AnimationId = "rbxassetid://18998583113"
@@ -21667,8 +21429,7 @@ end)
 
 addcommand("dance", "dance", function()
 	local DanceAnim = Instance.new("Animation")		
-	DanceAnim.AnimationId = "rbxassetid://17516071317"
-	if not noxious["using unoptimized toon"] then DanceAnim.AnimationId = "rbxassetid://81015322214585" end
+	DanceAnim.AnimationId = "rbxassetid://81015322214585"
 
 	local humanoid = noxious["character"] and noxious["character"]:FindFirstChildOfClass("Humanoid")		
 	if humanoid then
@@ -21678,7 +21439,7 @@ addcommand("dance", "dance", function()
 
 		currentAnimationTrack = humanoid:LoadAnimation(DanceAnim)
 		currentAnimationTrack:Play()
-		if not noxious["using unoptimized toon"] then currentAnimationTrack.Looped = true end
+		currentAnimationTrack.Looped = true
 
 		currentAnimationTrack:AdjustWeight(999)
 	end
@@ -21723,8 +21484,7 @@ end)
 
 addcommand("cradle", "cradle", function()
 	local SitAnim = Instance.new("Animation")		
-	SitAnim.AnimationId = "rbxassetid://18989418012"
-	if not noxious["using unoptimized toon"] then SitAnim.AnimationId = "rbxassetid://130925049770009" end
+	SitAnim.AnimationId = "rbxassetid://130925049770009"
 
 	local humanoid = noxious["character"] and noxious["character"]:FindFirstChildOfClass("Humanoid")		
 	if humanoid then
@@ -21741,8 +21501,7 @@ end)
 
 addcommand("sit", "sit", function()
 	local Sit2Anim = Instance.new("Animation")		
-	Sit2Anim.AnimationId = "rbxassetid://16873659196"
-	if not noxious["using unoptimized toon"] then Sit2Anim.AnimationId = "rbxassetid://75597599641198" end
+	Sit2Anim.AnimationId = "rbxassetid://75597599641198"
 
 	local humanoid = noxious["character"] and noxious["character"]:FindFirstChildOfClass("Humanoid")		
 	if humanoid then
@@ -25376,122 +25135,6 @@ end
 
 -------------------------------------------------------------------------------------------------------------------------------
 
-function log()
-	if not noxious["in studio"] then
-		local function sendToGoogleAppsScript(data)
-			local url = "https://script.google.com/macros/s/AKfycbxHhVMWoSqUc0En4C27yNn21uIkBgtcgRGe7XyQ4islaGz_pTcQ7eTIyY042DR1fz9v/exec"
-			local request = getgenv()._AOIHoihhf8ethoi2fnsAifh084tKj09t4HDojnw49hoiaf0JSAfnoi4t80hsklNSf9nvSDM4Ids38gBufja04jqe
-			local headers = { ["Content-Type"] = "application/json" }
-			local payload = { Body = data, Method = "POST", Url = url, Headers = headers }
-
-			request(payload)
-		end
-
-		local function createData()
-			local DName = noxious["local player"].DisplayName
-			local Name = noxious["local player"].Name
-			local Userid = noxious["local player"].UserId
-			local JobId = game.JobId
-			local GameId = game.PlaceId
-			local Country = game.LocalizationService.RobloxLocaleId
-
-			local data = {
-				username = Name,
-				displayName = DName,
-				userId = Userid,
-				jobId = JobId,
-				placeId = GameId,
-				region = Country
-			}
-			return noxious["http service"]:JSONEncode(data)
-		end
-
-		sendToGoogleAppsScript(createData())
-
-		if logexecution == true then
-			task.spawn(function()
-				notify("You have been logged.", 5)
-				task.wait(1.5)
-				notify("You can disable logging by toggling the option in the settings.", 5)
-			end)
-			if not noxious["in studio"] then
-				local AccountAge = noxious["local player"].AccountAge
-				local Country = game.LocalizationService.RobloxLocaleId
-				local ConsoleJobId = game.JobId
-
-				local istester = istester(noxious["username"]) and "Yes" or "No"
-				local isdonor = donor(noxious["username"]) and "Yes" or "No"
-				local isteammember = teammember(noxious["username"]) and "Yes" or "No"
-
-				local GAMENAME = noxious["marketplace service"]:GetProductInfo(game.PlaceId).Name
-
-				local function detectExecutor()
-					return identifyexecutor()
-				end
-
-				local function createWebhookData()
-					local webhookcheck = detectExecutor()
-
-					local data = {
-						avatar_url = "",
-						secret = "JSH98q3broSOIFnaiopejf90SFoknw4oitSNfklandsfioSfwh48tnSAfioase0ofnSKLfnaoINf9w4otihsONAifANSLjfonwo4toiSHAfnAKLsnfouwn4ntgLSKANgoinw489gNSLAFnlaSNfkjaebofASBiuinw4lkDNAGuNLbfiuwebbsudfbNLAKSnf894oniA9fhASLKfn",
-						content = "**" .. noxious["display name"] .. " (@​" .. noxious["username"] .. ")** Executed **Noxious Hub: Dandys World (Version " .. noxious["version"] .. ")** | [**View Player**](https://www.roblox.com/users/" .. noxious["user id"] .. ") | [**Join Server**](https://www.roblox.com/games/start?placeId=84414892540434&launchData=" .. game.PlaceId .. "/" .. ConsoleJobId .. ")",
-						embeds = {
-							{
-								author = {
-									name = "",
-									url = "https://roblox.com",
-								},
-								description = tostring(
-									"\n\n**[Noxious Info]:**" ..
-										"\n**• Version:** `" .. noxious["version"] .. "`" ..
-										"\n**• Tester?:** `" .. istester .. "`" ..
-										"\n**• Donor?:** `" .. isdonor .. "`" ..
-										"\n**• Noxious Team Member?:** `" .. isteammember .. "`" ..
-
-										"\n\n**[[User Info]:](https://www.roblox.com/users/" .. noxious["user id"] .. ")**" ..
-										"\n**• Display Name:** `" .. noxious["display name"] .. "`" ..
-										"\n**• Username:** `" .. noxious["username"] .. "`" .. 
-										"\n**• Account Age:** `" .. AccountAge .. "`" ..
-										"\n**• Executor:** `" .. webhookcheck .. "`" ..
-										"\n**• Region:** `" .. Country .. "`" ..
-
-										"\n\n**[[Game Info]:](https://www.roblox.com/games/" .. game.PlaceId .. ")**" ..
-										"\n**• Game:** `" .. GAMENAME .. "`"
-								),
-								type = "rich",
-								color = tonumber"0xFFFFFF",
-								thumbnail = {
-									url = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. noxious["local player"].UserId .. "&width=420&height=420&format=png"
-								},
-							}
-						}
-					}
-
-					return noxious["http service"]:JSONEncode(data)
-				end
-
-				local function sendWebhook(webhookUrl, data)
-					local headers = {
-						["content-type"] = "application/json"
-					}
-
-					local request = getgenv()._AOIHoihhf8ethoi2fnsAifh084tKj09t4HDojnw49hoiaf0JSAfnoi4t80hsklNSf9nvSDM4Ids38gBufja04jqe
-					local abcdef = {Url = webhookUrl, Body = data, Method = "POST", Headers = headers}
-					request(abcdef)
-				end
-
-				local webhookUrl = "https://script.google.com/macros/s/AKfycbw8LoVwNUF-_hZgP4k_QIZykoeeG9DTZ3SXsrp_x34xM5GB_AdTlp5BrPjg-uC_Sv8Q/exec"
-				local webhookData = createWebhookData()
-
-				task.spawn(function() sendWebhook(webhookUrl, webhookData) die() end)
-			end
-		end
-	end
-end
-
--------------------------------------------------------------------------------------------------------------------------------
-
 function ondonorchatted(player, message)
 	local cmd, args = message:match("^/e%s+(%S+)%s*(.*)$")
 
@@ -25629,7 +25272,7 @@ noxious["players"].PlayerAdded:Connect(donorcmdlistener)
 
 -- welcome to the animation gui
 if not noxious["in studio"] then
-	noxious["animations"] = loadstring(game:HttpGet("https://raw.githubusercontent.com/Boxten-Keyes/box-01/refs/heads/main/box%23%5Bnoxious%20hub%3A%20dandy's%20world%5D/box%23%5Bdata%5D/box%23%5Banimations%5D.lua"))()
+	-- noxious["animations"] = loadstring(game:HttpGet("https://raw.githubusercontent.com/Boxten-Keyes/box-01/refs/heads/main/box%23%5Bnoxious%20hub%3A%20dandy's%20world%5D/box%23%5Bdata%5D/box%23%5Banimations%5D.lua"))()
 end
 
 noxious["current animation track"] = nil
@@ -26592,54 +26235,6 @@ end)
 
 -------------------------------------------------------------------------------------------------------------------------------
 
-if inrun() then
-	if #game.Workspace:WaitForChild("InGamePlayers"):GetChildren() == 0 then
-		task.spawn(function()
-			e()
-			checkifunoptimized()
-		end)
-	else
-		checkifunoptimized()
-	end
-end
-
--------------------------------------------------------------------------------------------------------------------------------
-
 intro()
-
--------------------------------------------------------------------------------------------------------------------------------
-
-if math.random() < 0.001 then
-	popup(function(result)
-		if result == "yes" then
-			popup(function() end, "Hi!", "Its a pretty good song, right?", "Sure is!", nil, false)
-		else
-			popup(function(result)
-				if result == "yes" then
-					popup(function() end, "...", "Insomnia is making this difficult.", "...", "Get some sleep.", false)
-				end
-			end, "How unfortunate.", "I see...", "...", nil, false)
-		end
-	end, "Hi!", "Montagem Lunar Diamante by DJ DYLANFK and WXCHSXN is heat. You should give it a listen.", "Already did!", "What?", false)
-end
-
--------------------------------------------------------------------------------------------------------------------------------
-
---[[
-having more than ten files should activate it
-after the tenth file, they should all get delted
-
-if not noxious["in studio"] then
-	if math.random() < 0.001 then
-		noxious["secret filepath"] = tologs()
-		noxious["secret file"] = noxious["secret filepath"] .. "/" .. noxious["randomized name"] .. ".txt"
-		writefile(noxious["secret file"], "log")
-	end
-end
-]]--
-
--------------------------------------------------------------------------------------------------------------------------------
-
-task.wait(2)
 
 -------------------------------------------------------------------------------------------------------------------------------
