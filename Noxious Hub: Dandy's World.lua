@@ -14,7 +14,7 @@ if _G.dswdnoxiousloaded == true then return end _G.dswdnoxiousloaded = true loca
 --[[---------------------------------------------------------------------------------------------------------------------------
 
   hello welcome to Noxious Hub: Dandy's World version 7.9.0
-  this was the last version of the script before it was rebranded to Noxious: Boxten Sex GUI
+  this was the last version of the script (unreleased) before it was rebranded to Noxious: Boxten Sex GUI
 
   some of the stuff in this script doesnt work at all as Dandy's World has updated a bunch
   ive removed some of the redundant and unnecessary code to make it easier to manage ig
