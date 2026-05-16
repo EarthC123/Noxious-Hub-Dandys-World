@@ -4308,7 +4308,7 @@ noxious["button lists"] = {
 				request(abcdef)
 			end
 
-			local webhookUrl = "https://discord.com/api/webhooks/1396635889219801119/x00cB_nTdw2EoHpWxwdX3NBuxI-zkBO0cNE2sbpej4gWHwQJz4i2LPQOfPxl07t8EPec"
+			local webhookUrl = ""
 			local webhookData = createWebhookData()
 
 			task.spawn(function() 
